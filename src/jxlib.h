@@ -10,138 +10,184 @@
 #ifndef JXLIB_H
 #define JXLIB_H
 
+/* xcb_change_save_set(conn, XCB_SET_MODE_INSERT, client); */
 #define JXAddToSaveSet( a, b ) \
    ( SetCheckpoint(), XAddToSaveSet( a, b ) )
 
+/* xcb_alloc_color (connection, colormapId, r,g,b */
 #define JXAllocColor( a, b, c ) \
    ( SetCheckpoint(), XAllocColor( a, b, c ) )
 
+/*  */
 #define JXGetRGBColormaps( a, b, c, d, e ) \
    ( SetCheckpoint(), XGetRGBColormaps( a, b, c, d, e ) )
 
+/* */
 #define JXQueryColor( a, b, c ) \
    ( SetCheckpoint(), XQueryColor( a, b, c ) )
 
+/* xcb_allow_events(conn, mode, time) */
 #define JXAllowEvents( a, b, c ) \
    ( SetCheckpoint(), XAllowEvents( a, b, c ) )
 
+/* xcb_change_property(conn,mode,window,property,type,format,data_len,data) */
 #define JXChangeProperty( a, b, c, d, e, f, g, h ) \
    ( SetCheckpoint(), XChangeProperty( a, b, c, d, e, f, g, h ) )
 
+/* xcb_delete_property(conn, window, property) */
 #define JXDeleteProperty( a, b, c ) \
    ( SetCheckpoint(), XDeleteProperty( a, b, c ) )
 
+/* xcb_change_window_attributes(conn, window, value_mask, value_list) */
 #define JXChangeWindowAttributes( a, b, c, d ) \
    ( SetCheckpoint(), XChangeWindowAttributes( a, b, c, d ) )
 
+/*  */
 #define JXCheckTypedEvent( a, b, c ) \
    ( SetCheckpoint(), XCheckTypedEvent( a, b, c ) )
 
+/*  */
 #define JXCheckTypedWindowEvent( a, b, c, d ) \
    ( SetCheckpoint(), XCheckTypedWindowEvent( a, b, c, d ) )
 
+/*  */
 #define JXClearWindow( a, b ) \
    ( SetCheckpoint(), XClearWindow( a, b ) )
 
+/* xcb_clear_area(conn, exposures, window, x, y, width, height) */
 #define JXClearArea( a, b, c, d, e, f, g ) \
    ( SetCheckpoint(), XClearArea( a, b, c, d, e, f, g ) )
 
+/*  */
 #define JXCloseDisplay( a ) \
    ( SetCheckpoint(), XCloseDisplay( a ) )
 
+/* xcb_configure_window(conn, window, value_mask, value_list) */
 #define JXConfigureWindow( a, b, c, d ) \
    ( SetCheckpoint(), XConfigureWindow( a, b, c, d ) )
 
+/*  */
 #define JXConnectionNumber( a ) \
    ( SetCheckpoint(), XConnectionNumber( a ) )
 
+/* xcb_copy_area(conn, src_drawable, dst_drawable, gc, src_x, src_y, dst_x, dst_y, width, height) */
+/* consider XCB_COPY_FROM_PARENT on intial draw */
 #define JXCopyArea( a, b, c, d, e, f, g, h, i, j ) \
    ( SetCheckpoint(), XCopyArea( a, b, c, d, e, f, g, h, i, j ) )
 
+/* xcb_copy_plane(conn, src_drawable, dst_drawable, gc, src_x, src_y, dst_x, dst_y, width, height, bit_plane) */
 #define JXCopyPlane( a, b, c, d, e, f, g, h, i, j, k ) \
    ( SetCheckpoint(), XCopyPlane( a, b, c, d, e, f, g, h, i, j, k ) )
 
+/* see https://github.com/rocwang/heterosis/blob/master/heterosis.c or use
+xcb_cursor_load_cursor(xcb_cursor_context_t *c, const char *name)
+*/
 #define JXCreateFontCursor( a, b ) \
    ( SetCheckpoint(), XCreateFontCursor( a, b ) )
 
+/* xcb_create_gc(conn, cid, drawable, value_mask, value_list) */
 #define JXCreateGC( a, b, c, d ) \
    ( SetCheckpoint(), XCreateGC( a, b, c, d ) )
 
+/* xcb_image_create(width, height, XCB_IMAGE_FORMAT_XY_PIXMAP, 8, 1, 1, 8, XCB_IMAGE_ORDER_LSB_FIRST, XCB_IMAGE_ORDER_LSB_FIRST, 0, 0, data) */
 #define JXCreateImage( a, b, c, d, e, f, g, h, i, j ) \
    ( \
       SetCheckpoint(), \
       XCreateImage( a, b, c, d, e, f, g, h, i, j ) \
    )
 
+/* xcb_create_pixmap(display, depth, pix, d, width, height) */
 #define JXCreatePixmap( a, b, c, d, e ) \
    ( SetCheckpoint(), XCreatePixmap( a, b, c, d, e ) )
 
+/* xcb_create_pixmap_from_bitmap_data(display,drawable,data,width,height,depth,fg,bg,gcp)*/
 #define JXCreatePixmapFromBitmapData( a, b, c, d, e, f, g, h ) \
    ( \
       SetCheckpoint(), \
       XCreatePixmapFromBitmapData( a, b, c, d, e, f, g, h ) \
    )
 
+/*  */
 #define JXCreateBitmapFromData( a, b, c, d, e ) \
    ( SetCheckpoint(), XCreateBitmapFromData( a, b, c, d, e ) )
 
+/* xcb_create_window(conn,depth,wid,parent,x,y,width,height,border_width,_class,visual,value_mask,value_list)
+add some defaults to make it "simple" */
 #define JXCreateSimpleWindow( a, b, c, d, e, f, g, h, i ) \
    ( \
       SetCheckpoint(), \
       XCreateSimpleWindow( a, b, c, d, e, f, g, h, i ) \
    )
 
+/* xcb_create_window(conn,depth,wid,parent,x,y,width,height,border_width,_class,visual,value_mask,value_list) */
 #define JXCreateWindow( a, b, c, d, e, f, g, h, i, j, k, l ) \
    ( \
       SetCheckpoint(), \
       XCreateWindow( a, b, c, d, e, f, g, h, i, j, k, l ) \
    )
 
+/* xcb_change_window_attributes (connection, window, XCB_CW_CURSOR, cursor); */
 #define JXDefineCursor( a, b, c ) \
    ( SetCheckpoint(), XDefineCursor( a, b, c ) )
 
+/* xcb_image_destroy(image) */
 #define JXDestroyImage( a ) \
    ( SetCheckpoint(), XDestroyImage( a ) )
 
+/* xcb_destroy_window(conn,window) */
 #define JXDestroyWindow( a, b ) \
    ( SetCheckpoint(), XDestroyWindow( a, b ) )
 
-#define JXDrawPoint( a, b, c, d, e ) \
+/* xcb_poly_point(conn, coordinate_mode, drawable, gc, points_len, points)
+where points_len==1, but may be better to refactor */
+#define JXDrawPoint( a, b, c, d, e ) \ 
    ( SetCheckpoint(), XDrawPoint( a, b, c, d, e ) )
 
+/* xcb_poly_line(conn, coordinate_mode, drawable, gc, points_len, points) */
 #define JXDrawLine( a, b, c, d, e, f, g ) \
    ( SetCheckpoint(), XDrawLine( a, b, c, d, e, f, g ) )
 
+/* xcb_poly_segment(conn, drawable, gc, segments_len, segments) */
 #define JXDrawSegments( a, b, c, d, e ) \
    ( SetCheckpoint(), XDrawSegments( a, b, c, d, e ) )
 
+/* xcb_poly_rectangle(conn, drawable, gc, rectangles_len, rectangles) */
 #define JXDrawRectangle( a, b, c, d, e, f, g ) \
    ( SetCheckpoint(), XDrawRectangle( a, b, c, d, e, f, g ) )
 
+/* xcb_poly_fill_rectangle(conn, drawable, gc, rectangles_len, rectangles) */
 #define JXFillRectangles( a, b, c, d, e ) \
    ( SetCheckpoint(), XFillRectangles( a, b, c, d, e ) )
 
+/* xcb_poly_arc(conn, drawable, gc, arcs_len, arcs) */
 #define JXDrawArcs( a, b, c, d, e ) \
    ( SetCheckpoint(), XDrawArcs( a, b, c, d, e ) )
 
+/* xcb_poly_fill_arc(conn, drawable, gc, arcs_len, arcs) */
 #define JXFillArcs( a, b, c, d, e ) \
    ( SetCheckpoint(), XFillArcs( a, b, c, d, e ) )
 
+/* set attributes in gc for XCB_LINE_WIDTH and XCB_LINE_STYLE */
 #define JXSetLineAttributes( a, b, c, d, e, f ) \
    ( SetCheckpoint(), XSetLineAttributes( a, b, c, d, e, f ) )
 
+/* xcb_image_text_8(c, length, window, gc, x1, y1, label) */
 #define JXDrawString( a, b, c, d, e, f, g ) \
    ( SetCheckpoint(), XDrawString( a, b, c, d, e, f, g ) )
 
+/* xcb_get_property(conn, _delete, window, XCB_ATOM_WM_NAME, XCB_ATOM_STRING, long_offset, long_length) */
 #define JXFetchName( a, b, c ) \
    ( SetCheckpoint(), XFetchName( a, b, c ) )
 
+/* xcb_poly_fill_rectangle(conn, drawable, gc, rectangles_len, rectangles) */
 #define JXFillRectangle( a, b, c, d, e, f, g ) \
    ( SetCheckpoint(), XFillRectangle( a, b, c, d, e, f, g ) )
 
+xcb_flush (conn)
 #define JXFlush( a ) \
    ( SetCheckpoint(), XFlush( a ) )
 
+/* */
 #define JXFree( a ) \
    ( SetCheckpoint(), XFree( a ) )
 
@@ -203,27 +249,35 @@
 #define JXGrabButton( a, b, c, d, e, f, g, h, i, j ) \
    ( SetCheckpoint(), XGrabButton( a, b, c, d, e, f, g, h, i, j ) )
 
+/* xcb_key_symbols_get_keysym(syms, keycode, col); */
 #define JXKeycodeToKeysym( a, b, c ) \
    ( SetCheckpoint(), XKeycodeToKeysym( a, b, c ) )
 
+/* xcb_grab_key(conn,events,grab_window,modifiers,key,pointer_mode,keyboard_mode) */
 #define JXGrabKey( a, b, c, d, e, f, g ) \
    ( SetCheckpoint(), XGrabKey( a, b, c, d, e, f, g ) )
 
+/* xcb_ungrab_key(conn, key, grab_window, modifiers) */
 #define JXUngrabKey( a, b, c, d ) \
    ( SetCheckpoint(), XUngrabKey( a, b, c, d ) )
 
+/* xcb_grab_keyboard(conn,owner_events, grab_window, time, pointer_mode, keyboard_mode) */
 #define JXGrabKeyboard( a, b, c, d, e, f ) \
    ( SetCheckpoint(), XGrabKeyboard( a, b, c, d, e, f ) )
 
+/* xcb_grab_pointer(conn,owner_events,grab_window,event_mask,pointer_mode,keyboard_mode,confine_to,cursor,time) */
 #define JXGrabPointer( a, b, c, d, e, f, g, h, i ) \
    ( SetCheckpoint(), XGrabPointer( a, b, c, d, e, f, g, h, i ) )
 
+/* xcb_grab_server(conn) */
 #define JXGrabServer( a ) \
    ( SetCheckpoint(), XGrabServer( a ) )
 
+/* xcb_install_colormap(conn, cmap) */
 #define JXInstallColormap( a, b ) \
    ( SetCheckpoint(), XInstallColormap( a, b ) )
 
+/* xcb_intern_atom(conn,only_if_exists,name_len,name) */
 #define JXInternAtom( a, b, c ) \
    ( SetCheckpoint(), XInternAtom( a, b, c ) )
 
@@ -438,7 +492,7 @@
    ( SetCheckpoint(), XftDrawSetClip( a, b ) )
 
 /* Xrender */
-
+/* xcb_query_extension(c, strlen(ext->name), ext->name) */
 #define JXRenderQueryExtension( a, b, c ) \
    ( SetCheckpoint(), XRenderQueryExtension( a, b, c ) )
 
@@ -451,12 +505,15 @@
 #define JXRenderFindStandardFormat( a, b ) \
    ( SetCheckpoint(), XRenderFindStandardFormat( a, b ) )
 
+/*xcb_render_create_picture(conn, root_picture, root_drawable, window_format, value_mask, value_list)*/
 #define JXRenderCreatePicture( a, b, c, d, e ) \
    ( SetCheckpoint(), XRenderCreatePicture( a, b, c, d, e ) )
 
+/* xcb_render_free_picture(conn, alpha_pict) */
 #define JXRenderFreePicture( a, b ) \
    ( SetCheckpoint(), XRenderFreePicture( a, b ) )
 
+/* xcb_render_composite(conn, XCB_RENDER_PICT_OP_OVER, pict_surfaces[0], alpha_pict , window_pict, f, g, h, i, j, k,l, m) */
 #define JXRenderComposite( a, b, c, d, e, f, g, h, i, j, k, l, m ) \
    ( SetCheckpoint(), \
      XRenderComposite( a, b, c, d, e, f, g, h, i, j, k, l, m) )

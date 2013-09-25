@@ -50,7 +50,7 @@
 #define JXCheckTypedWindowEvent( a, b, c, d ) \
    ( SetCheckpoint(), XCheckTypedWindowEvent( a, b, c, d ) )
 
-/*  */
+/* use xcb_clear_area with defaults */
 #define JXClearWindow( a, b ) \
    ( SetCheckpoint(), XClearWindow( a, b ) )
 
@@ -58,7 +58,7 @@
 #define JXClearArea( a, b, c, d, e, f, g ) \
    ( SetCheckpoint(), XClearArea( a, b, c, d, e, f, g ) )
 
-/*  */
+/* xcb_disconnect(conn) */
 #define JXCloseDisplay( a ) \
    ( SetCheckpoint(), XCloseDisplay( a ) )
 
@@ -66,7 +66,7 @@
 #define JXConfigureWindow( a, b, c, d ) \
    ( SetCheckpoint(), XConfigureWindow( a, b, c, d ) )
 
-/*  */
+/* NOP? */
 #define JXConnectionNumber( a ) \
    ( SetCheckpoint(), XConnectionNumber( a ) )
 
@@ -119,7 +119,8 @@ add some defaults to make it "simple" */
       XCreateSimpleWindow( a, b, c, d, e, f, g, h, i ) \
    )
 
-/* xcb_create_window(conn,depth,wid,parent,x,y,width,height,border_width,_class,visual,value_mask,value_list) */
+/* xcb_create_window(conn,depth,wid,parent,x,y,width,height,border_width,_class,visual,value_mask,value_list) 
+NOTE: wid from xcb_generate_id(conn);*/
 #define JXCreateWindow( a, b, c, d, e, f, g, h, i, j, k, l ) \
    ( \
       SetCheckpoint(), \
@@ -183,20 +184,23 @@ where points_len==1, but may be better to refactor */
 #define JXFillRectangle( a, b, c, d, e, f, g ) \
    ( SetCheckpoint(), XFillRectangle( a, b, c, d, e, f, g ) )
 
-xcb_flush (conn)
+/* xcb_flush (conn) */
 #define JXFlush( a ) \
    ( SetCheckpoint(), XFlush( a ) )
 
-/* */
+/* free(a) */
 #define JXFree( a ) \
    ( SetCheckpoint(), XFree( a ) )
 
+/* xcb_free_colors(conn, cmap, plane_mask, pixels_len, pixels) */
 #define JXFreeColors( a, b, c, d, e ) \
    ( SetCheckpoint(), XFreeColors( a, b, c, d, e ) )
 
+/* xcb_free_cursor(conn, cursor) */
 #define JXFreeCursor( a, b ) \
    ( SetCheckpoint(), XFreeCursor( a, b ) )
 
+/*  */
 #define JXFreeFont( a, b ) \
    ( SetCheckpoint(), XFreeFont( a, b ) )
 
@@ -206,31 +210,40 @@ xcb_flush (conn)
 #define JXFreeModifiermap( a ) \
    ( SetCheckpoint(), XFreeModifiermap( a ) )
 
+/* xcb_free_pixmap(conn, pixmap) */
 #define JXFreePixmap( a, b ) \
    ( SetCheckpoint(), XFreePixmap( a, b ) )
 
+/* xcb_get_atom_name(conn, atom) */
 #define JXGetAtomName( a, b ) \
    ( SetCheckpoint(), XGetAtomName( a, b ) )
 
+/* xcb_get_modifier_mapping(conn) */
 #define JXGetModifierMapping( a ) \
    ( SetCheckpoint(), XGetModifierMapping( a ) )
 
+/*  */
 #define JXGetSubImage( a, b, c, d, e, f, g, h, i, j, k ) \
    ( SetCheckpoint(), XGetSubImage( a, b, c, d, e, f, g, h, i, j, k ) )
 
+/*  */
 #define JXGetTransientForHint( a, b, c ) \
    ( SetCheckpoint(), XGetTransientForHint( a, b, c ) )
 
+/*  */
 #define JXGetClassHint( a, b, c ) \
    ( SetCheckpoint(), XGetClassHint( a, b, c ) )
 
+/* xcb_get_window_attributes(conn, window) */
 #define JXGetWindowAttributes( a, b, c ) \
    ( SetCheckpoint(), XGetWindowAttributes( a, b, c ) )
 
+/* xcb_get_property(conn, delete, window, property, type, long_offset, long_length) */
 #define JXGetWindowProperty( a, b, c, d, e, f, g, h, i, j, k, l ) \
    ( SetCheckpoint(), \
    XGetWindowProperty( a, b, c, d, e, f, g, h, i, j, k, l ) )
 
+/*  */
 #define JXGetWMColormapWindows( a, b, c, d ) \
    ( SetCheckpoint(), XGetWMColormapWindows( a, b, c, d ) )
 
@@ -281,39 +294,54 @@ xcb_flush (conn)
 #define JXInternAtom( a, b, c ) \
    ( SetCheckpoint(), XInternAtom( a, b, c ) )
 
+/*  */
 #define JXKeysymToKeycode( a, b ) \
    ( SetCheckpoint(), XKeysymToKeycode( a, b ) )
 
+/* xcb_kill_client(conn, resource) */
 #define JXKillClient( a, b ) \
    ( SetCheckpoint(), XKillClient( a, b ) )
 
+/* xcb_query_font (conn, font) */
 #define JXLoadQueryFont( a, b ) \
    ( SetCheckpoint(), XLoadQueryFont( a, b ) )
 
+/* xcb_unmap_window(conn,, window );uint32_t values[] = { XCB_STACK_MODE_ABOVE };
+xcb_configure_window(conn, window, XCB_CONFIG_WINDOW_STACK_MODE, values)
+xcb_map_window(conn, window) */
 #define JXMapRaised( a, b ) \
    ( SetCheckpoint(), XMapRaised( a, b ) )
 
+/* xcb_map_window(conn, window) */
 #define JXMapWindow( a, b ) \
    ( SetCheckpoint(), XMapWindow( a, b ) )
 
+/*  uint32_t values[] = { x, y, width, height }; xcb_configure_window(conn, window,
+   XCB_CONFIG_WINDOW_X | XCB_CONFIG_WINDOW_Y | XCB_CONFIG_WINDOW_WIDTH | XCB_CONFIG_WINDOW_HEIGHT, values) */
 #define JXMoveResizeWindow( a, b, c, d, e, f ) \
    ( SetCheckpoint(), XMoveResizeWindow( a, b, c, d, e, f ) )
 
+/* xcb_configure_window(conn, window, XCB_CONFIG_WINDOW_X | XCB_CONFIG_WINDOW_Y, values) */
 #define JXMoveWindow( a, b, c, d ) \
    ( SetCheckpoint(), XMoveWindow( a, b, c, d ) )
 
+/*  */
 #define JXNextEvent( a, b ) \
    ( SetCheckpoint(), XNextEvent( a, b ) )
 
+/*  */
 #define JXMaskEvent( a, b, c ) \
    ( SetCheckpoint(), XMaskEvent( a, b, c ) )
 
+/*  */
 #define JXCheckMaskEvent( a, b, c ) \
    ( SetCheckpoint(), XCheckMaskEvent( a, b, c ) )
 
+/*  */
 #define JXOpenDisplay( a ) \
    ( SetCheckpoint(), XOpenDisplay( a ) )
 
+/* xcb_alloc_named_color(conn, cmap, name_len, name) */
 #define JXParseColor( a, b, c, d ) \
    ( SetCheckpoint(), XParseColor( a, b, c, d ) )
 
@@ -323,133 +351,176 @@ xcb_flush (conn)
 #define JXPutBackEvent( a, b ) \
    ( SetCheckpoint(), XPutBackEvent( a, b ) )
 
+/* xcb_get_image(conn, format, drawable, x, y, width, height, plane_mask) */
 #define JXGetImage( a, b, c, d, e, f, g, h ) \
    ( SetCheckpoint(), XGetImage( a, b, c, d, e, f, g, h ) )
 
+/* xcb_put_image(conn, format, drawable, gc, width, height, dst_x, dst_y, left_pad, depth, data_len, data) */
 #define JXPutImage( a, b, c, d, e, f, g, h, i, j ) \
    ( SetCheckpoint(), XPutImage( a, b, c, d, e, f, g, h, i, j ) )
 
+/* xcb_query_pointer(conn, window) */
 #define JXQueryPointer( a, b, c, d, e, f, g, h, i ) \
    ( SetCheckpoint(), XQueryPointer( a, b, c, d, e, f, g, h, i ) )
 
+/* xcb_query_tree(conn, window) */
 #define JXQueryTree( a, b, c, d, e, f ) \
    ( SetCheckpoint(), XQueryTree( a, b, c, d, e, f ) )
 
+/* xcb_reparent_window(conn, window, parent, x, y) */
 #define JXReparentWindow( a, b, c, d, e ) \
    ( SetCheckpoint(), XReparentWindow( a, b, c, d, e ) )
 
+/*  */
 #define JXRemoveFromSaveSet( a, b ) \
    ( SetCheckpoint(), XRemoveFromSaveSet( a, b ) )
 
+/* xcb_configure_window(conn, window, XCB_CONFIG_WINDOW_WIDTH | XCB_CONFIG_WINDOW_HEIGHT, values) */
 #define JXResizeWindow( a, b, c, d ) \
    ( SetCheckpoint(), XResizeWindow( a, b, c, d ) )
 
+/*  */
 #define JXRestackWindows( a, b, c ) \
    ( SetCheckpoint(), XRestackWindows( a, b, c ) )
 
+/*  */
 #define JXRaiseWindow( a, b ) \
    ( SetCheckpoint(), XRaiseWindow( a, b ) )
 
+/*  */
 #define JXSelectInput( a, b, c ) \
    ( SetCheckpoint(), XSelectInput( a, b, c ) )
 
+/*  */
 #define JXSendEvent( a, b, c, d, e ) \
    ( SetCheckpoint(), XSendEvent( a, b, c, d, e ) )
 
+/*  */
 #define JXSetBackground( a, b, c ) \
    ( SetCheckpoint(), XSetBackground( a, b, c ) )
 
+/*  */
 #define JXSetClipMask( a, b, c ) \
    ( SetCheckpoint(), XSetClipMask( a, b, c ) )
 
+/*  */
 #define JXSetClipOrigin( a, b, c, d ) \
    ( SetCheckpoint(), XSetClipOrigin( a, b, c, d) )
 
+/*  */
 #define JXSetClipRectangles( a, b, c, d, e, f, g ) \
    ( SetCheckpoint(), XSetClipRectangles( a, b, c, d, e, f, g ) )
 
+/*  */
 #define JXSetErrorHandler( a ) \
    ( SetCheckpoint(), XSetErrorHandler( a ) )
 
+/*  */
 #define JXSetFont( a, b, c ) \
    ( SetCheckpoint(), XSetFont( a, b, c ) )
 
+/*  */
 #define JXSetForeground( a, b, c ) \
    ( SetCheckpoint(), XSetForeground( a, b, c ) )
 
+/*  */
 #define JXSetInputFocus( a, b, c, d ) \
    ( SetCheckpoint(), XSetInputFocus( a, b, c, d ) )
 
+/*  */
 #define JXSetWindowBackground( a, b, c ) \
    ( SetCheckpoint(), XSetWindowBackground( a, b, c ) )
 
+/*  */
 #define JXSetWindowBorderWidth( a, b, c ) \
    ( SetCheckpoint(), XSetWindowBorderWidth( a, b, c ) )
 
+/*  */
 #define JXSetWMNormalHints( a, b, c ) \
    ( SetCheckpoint(), XSetWMNormalHints( a, b, c ) )
 
+/*  */
 #define JXShapeCombineRectangles( a, b, c, d, e, f, g, h, i ) \
    ( SetCheckpoint(), XShapeCombineRectangles( a, b, c, d, e, f, g, h, i ) )
 
+/*  */
 #define JXShapeCombineShape( a, b, c, d, e, f, g, h ) \
    ( SetCheckpoint(), XShapeCombineShape( a, b, c, d, e, f, g, h ) )
 
+/*  */
 #define JXShapeCombineMask( a, b, c, d, e, f, g ) \
    ( SetCheckpoint(), XShapeCombineMask( a, b, c, d, e, f, g ) )
 
+/*  */
 #define JXShapeQueryExtension( a, b, c ) \
    ( SetCheckpoint(), XShapeQueryExtension( a, b, c ) )
 
+/*  */
 #define JXQueryExtension( a, b, c, d, e ) \
    ( SetCheckpoint(), XQueryExtension( a, b, c, d, e ) )
 
+/*  */
 #define JXShapeQueryExtents( a, b, c, d, e, f, g, h, i, j, k, l ) \
    ( SetCheckpoint(), \
    XShapeQueryExtents( a, b, c, d, e, f, g, h, i, j, k, l ) )
 
+/*  */
 #define JXShapeGetRectangles( a, b, c, d, e ) \
    ( SetCheckpoint(), XShapeGetRectangles( a, b, c, d, e ) )
 
+/*  */
 #define JXShapeSelectInput( a, b, c ) \
    ( SetCheckpoint(), XShapeSelectInput( a, b, c ) )
 
+/*  */
 #define JXStoreName( a, b, c ) \
    ( SetCheckpoint(), XStoreName( a, b, c ) )
 
+/*  */
 #define JXStringToKeysym( a ) \
    ( SetCheckpoint(), XStringToKeysym( a ) )
 
+/*  */
 #define JXSync( a, b ) \
    ( SetCheckpoint(), XSync( a, b ) )
 
+/*  */
 #define JXTextWidth( a, b, c ) \
    ( SetCheckpoint(), XTextWidth( a, b, c ) )
 
+/*  */
 #define JXUngrabButton( a, b, c, d ) \
    ( SetCheckpoint(), XUngrabButton( a, b, c, d ) )
 
+/*  */
 #define JXUngrabKeyboard( a, b ) \
    ( SetCheckpoint(), XUngrabKeyboard( a, b ) )
 
+/*  */
 #define JXUngrabPointer( a, b ) \
    ( SetCheckpoint(), XUngrabPointer( a, b ) )
 
+/*  */
 #define JXUngrabServer( a ) \
    ( SetCheckpoint(), XUngrabServer( a ) )
 
+/*  */
 #define JXUnmapWindow( a, b ) \
    ( SetCheckpoint(), XUnmapWindow( a, b ) )
 
+/*  */
 #define JXWarpPointer( a, b, c, d, e, f, g, h, i ) \
    ( SetCheckpoint(), XWarpPointer( a, b, c, d, e, f, g, h, i ) )
 
+/*  */
 #define JXSetSelectionOwner( a, b, c, d ) \
    ( SetCheckpoint(), XSetSelectionOwner( a, b, c, d ) )
 
+/*  */
 #define JXGetSelectionOwner( a, b ) \
    ( SetCheckpoint(), XGetSelectionOwner( a, b ) )
 
+/*  */
 #define JXSetRegion( a, b, c ) \
    ( SetCheckpoint(), XSetRegion( a, b, c ) )
 
